@@ -30,7 +30,7 @@ public class CamRTReader : UdonSharp.UdonSharpBehaviour
 #if !UDON
 	public void OnAsyncGpuReadbackComplete(UnityEngine.Rendering.AsyncGPUReadbackRequest request)
 #else
-	public void OnAsyncGpuReadbackComplete(VRC.SDK3.Rendering.VRCAsyncGPUReadbackRequest request)
+	public override void OnAsyncGpuReadbackComplete(VRC.SDK3.Rendering.VRCAsyncGPUReadbackRequest request)
 #endif
 	{
 		if (request.hasError || !request.done) return;
