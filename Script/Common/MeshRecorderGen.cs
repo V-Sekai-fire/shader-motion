@@ -37,7 +37,11 @@ public class MeshRecorderGen {
 		} else
 			mats.AddRange(new Matrix4x4[2]);
 
+#if UNITY_2021_2_OR_NEWER
+		tex.Reinitialize(8, mats.Count/2, TextureFormat.RGBAFloat, false);
+#else
 		tex.Resize(8, mats.Count/2, TextureFormat.RGBAFloat, false);
+#endif
 		tex.SetPixels(mats.SelectMany(m => 
 			new Color[]{m.GetColumn(0), m.GetColumn(1), m.GetColumn(2), m.GetColumn(3)}).ToArray());
 		tex.Apply(false, false);

@@ -94,7 +94,11 @@ public class MeshPlayerGen {
 			}
 		}
 		var maxCount = mats.Max(l => l.Count);
+#if UNITY_2021_2_OR_NEWER
+		boneTex.Reinitialize(maxCount*4, skel.bones.Length, TextureFormat.RGBAFloat, false);
+#else
 		boneTex.Resize(maxCount*4, skel.bones.Length, TextureFormat.RGBAFloat, false);
+#endif
 		boneTex.SetPixels(mats.SelectMany(l=>l.Concat(Enumerable.Repeat(new Matrix4x4(), maxCount-l.Count)))
 			.SelectMany(m=>new Color[]{m.GetColumn(0), m.GetColumn(1), m.GetColumn(2), m.GetColumn(3)}).ToArray());
 		boneTex.Apply(false);
@@ -134,7 +138,11 @@ public class MeshPlayerGen {
 				bw.boneIndex0+Mathf.Clamp01(bw.weight0)/2, bw.boneIndex1+Mathf.Clamp01(bw.weight1)/2,
 				bw.boneIndex2+Mathf.Clamp01(bw.weight2)/2, bw.boneIndex3+Mathf.Clamp01(bw.weight3)/2)));
 		}
+#if UNITY_2021_2_OR_NEWER
+		shapeTex.Reinitialize(256, colors.Count/256, TextureFormat.RGBAFloat, false);
+#else
 		shapeTex.Resize(256, colors.Count/256, TextureFormat.RGBAFloat, false);
+#endif
 		shapeTex.SetPixels(colors.ToArray());
 		shapeTex.Apply(false, false);
 		CreateBoneTex(boneTex, bindposes);

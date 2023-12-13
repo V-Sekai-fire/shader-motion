@@ -20,8 +20,6 @@ public class CamRTReader : UdonSharp.UdonSharpBehaviour
 	void OnPostRender() {
 #if !UDON
 		UnityEngine.Rendering.AsyncGPUReadback.Request(inputTexture, 0, TextureFormat.RGBAFloat, OnAsyncGpuReadbackComplete);
-#elif UNITY_ANDROID // TODO: readback doesn't work yet
-		outputTexture.ReadPixels(new Rect(0, 0, inputTexture.width, inputTexture.height), 0, 0, false);
 #else
 		VRC.SDK3.Rendering.VRCAsyncGPUReadback.Request(inputTexture, 0, TextureFormat.RGBAFloat, (VRC.Udon.Common.Interfaces.IUdonEventReceiver)(Component)this);
 #endif
